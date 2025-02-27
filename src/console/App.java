@@ -1,10 +1,10 @@
-package week2;
+package console;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // 콘솔창을 이용한 Level 1 계산기 구현 코드
-public class AppConsole {
+public class App {
     public static void main(String[] args) {
         System.out.println("Welcome to Sparta Calculator!");
         //요구사항 - 반목문을 사용하되 exit 문자열을 입력하기 전까지 무한으로 계산을 진행하도록 함
@@ -21,20 +21,20 @@ public class AppConsole {
 
                 //요구사항 - scanner를 사용하여 사칙연산 기호를 전달받기
                 System.out.print("연산기호(+, -, *, /)를 입력해주세요 : ");
-                String operator = scanner.next();
-
+                char operator = scanner.next().charAt(0);
+                scanner.nextLine(); //개행문자 제거
                 int result = 0;
                 switch (operator) { //입력받은 문자열이 사칙연산인지 아닌지 확인
-                    case "+":
+                    case '+':
                         result = num1 + num2;
                         break;
-                    case "-":
+                    case '-':
                         result = num1 - num2;
                         break;
-                    case "*":
+                    case '*':
                         result = num1 * num2;
                         break;
-                    case "/":
+                    case '/':
                         result = num1 / num2;
                         break;
                     default:
@@ -60,8 +60,8 @@ public class AppConsole {
                 System.out.println("알 수 없는 오류 발생: " + e.getMessage());
             }
 
-            System.out.print("종료하려면 exit를 입력, 아니면 아무거나 입력해주세요: ");
-            String isEnd = scanner.next();
+            System.out.print("종료하려면 exit를 입력해주세요: ");
+            String isEnd = scanner.nextLine();
             if(isEnd.equals("exit")) {
                 //exit를 입력 받은 경우 반복 종료
                 break;
