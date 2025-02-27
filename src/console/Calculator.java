@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Calculator {
     //lv2 요구사항 - 연산 결과를 저장하는 컬렉션 타입 필드
-    List<Integer> results = new ArrayList<>();
+    private List<Integer> results = new ArrayList<>();
 
     //lv2 요구사항 - 사칙연산을 수행한 후, 결과값을 반환하는 메서드 구현
     private int add(int num1, int num2) {

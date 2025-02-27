@@ -41,7 +41,8 @@ public class App {
                     int result;
                     if (operator != '+' && operator != '-' && operator != '*' && operator != '/') {
                         throw new IllegalArgumentException("연산기호에 해당하지 않습니다. " + operator);
-                    } else {
+                    }
+                    else {
                         //lv2 요구사항 - Lv 1에서 구현한 App 클래스의 main 메서드에 Calculator 클래스가 활용될 수 있도록 수정
                         result = calculator.calculate(num1, num2, operator);
                         //lv2 요구사항 - setter 사용
@@ -84,7 +85,8 @@ public class App {
                             int removeNum = Integer.parseInt(isRemove);
                             if (removeNum < 0) {
                                 throw new IllegalArgumentException("음수는 입력할 수 없습니다.");
-                            } else {
+                            }
+                            else {
                                 if (removeNum > resultSize) {
                                     System.out.println("입력값이 저장된 데이터 개수보다 커, 전체 기록을 삭제합니다.");
                                     removeNum = resultSize;
