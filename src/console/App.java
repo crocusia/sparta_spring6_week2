@@ -9,10 +9,15 @@ import java.util.Scanner;
 // 콘솔창을 이용한 Level 1 계산기 구현 코드
 public class App {
     //리스트 출력 메서드
-    public <T> void printListResults(List<T> results){
+    public void printListResults(List<Double> results){
         System.out.println("-----record-----");
-        for(T r : results){
+        for(double r : results){
+            if(r % 1 == 0){
+                System.out.printf("%.0f ", r);
+            }
+            else{
             System.out.println(r);
+            }
         }
         System.out.println("----------------");
     }
@@ -51,7 +56,13 @@ public class App {
                         result = arithmeticCalculator.calculate(num1, num2, operator);
                         arithmeticCalculator.saveResult(result);
                     }
-                    System.out.println("연산 결과 : " + result);
+
+                    if(result % 1 == 0){
+                        System.out.printf("연산 결과 : %.0f \n", result);
+                    }
+                    else {
+                        System.out.println("연산 결과 : " + result);
+                    }
                     break;
                 }
                 catch (InputMismatchException e) {
