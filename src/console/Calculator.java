@@ -56,7 +56,7 @@ public class Calculator {
         return new ArrayList<>(results); //clear를 사용해도 원본 내용이 삭제되지 않도록 복사본 반환
     }
 
-    //요구사항 - 제일 오래된 계산 결과 삭제하기
+    //lv2 요구사항 - 제일 오래된 계산 결과 삭제하기
     public void removeResult(){
         if(!this.results.isEmpty()){
             this.results.remove(0);
