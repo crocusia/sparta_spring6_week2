@@ -7,25 +7,25 @@ import java.util.stream.Collectors;
 enum OperationType{
     ADD('+'){
         @Override
-        public <T extends Number> double apply(T num1, T num2){
+        public <T1 extends Number, T2 extends Number> double apply(T1 num1, T2 num2){
             return num1.doubleValue() + num2.doubleValue();
         }
     },
     SUB('-'){
         @Override
-        public <T extends Number> double apply(T num1, T num2){
+        public <T1 extends Number, T2 extends Number> double apply(T1 num1, T2 num2){
             return num1.doubleValue() - num2.doubleValue();
         }
     },
     MUL('*'){
         @Override
-        public <T extends Number> double apply(T num1, T num2){
+        public <T1 extends Number, T2 extends Number> double apply(T1 num1, T2 num2){
             return num1.doubleValue() * num2.doubleValue();
         }
     },
     DIV('/'){
         @Override
-        public <T extends Number> double apply(T num1, T num2){
+        public <T1 extends Number, T2 extends Number> double apply(T1 num1, T2 num2){
             if(num2.doubleValue() == 0.0){
                 throw new ArithmeticException();
             }
@@ -38,7 +38,7 @@ enum OperationType{
         this.operator = operator;
     }
     //추상 메서드
-    public abstract <T extends Number> double apply(T num1, T num2);
+    public abstract <T1 extends Number, T2 extends Number> double apply(T1 num1, T2 num2);
 
     public static OperationType checkChar(char operator) {
         for(OperationType op : OperationType.values()){
@@ -46,7 +46,7 @@ enum OperationType{
                 return op;
             }
         }
-        throw new IllegalArgumentException("잘못된 연산자: " + operator);
+        throw new IllegalArgumentException("연산자: " + operator);
     }
 }
 

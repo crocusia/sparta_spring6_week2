@@ -22,11 +22,11 @@ public class App {
         System.out.println("----------------");
     }
 
-    public static <T extends Number> T checkNumber(String input) {
+    public static Number checkNumber(String input) {
         if (input.matches("-?\\d+")) { // 정수 판별
-            return (T) Integer.valueOf(input);
+            return Integer.parseInt(input);
         } else if (input.matches("-?\\d+\\.\\d+")) { // 실수 판별
-            return (T) Double.valueOf(input);
+            return Double.parseDouble(input);
         } else {
             throw new InputMismatchException();
         }
@@ -49,13 +49,16 @@ public class App {
                     char operator = scanner.next().charAt(0);
                     scanner.nextLine();
                     double result;
-                    if (operator != '+' && operator != '-' && operator != '*' && operator != '/') {
-                        throw new IllegalArgumentException("연산기호에 해당하지 않습니다. " + operator);
-                    }
-                    else {
-                        result = arithmeticCalculator.calculate(num1, num2, operator);
-                        arithmeticCalculator.saveResult(result);
-                    }
+//                    if (operator != '+' && operator != '-' && operator != '*' && operator != '/') {
+//                        throw new IllegalArgumentException("연산기호에 해당하지 않습니다. " + operator);
+//                    }
+//                    else {
+//                        result = arithmeticCalculator.calculate(num1, num2, operator);
+//                        arithmeticCalculator.saveResult(result);
+//                    }
+
+                    result = arithmeticCalculator.calculate(num1, num2, operator);
+                    arithmeticCalculator.saveResult(result);
 
                     if(result % 1 == 0){
                         System.out.printf("연산 결과 : %.0f \n", result);
