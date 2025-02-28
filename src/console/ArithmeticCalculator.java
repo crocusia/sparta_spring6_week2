@@ -54,7 +54,7 @@ public class ArithmeticCalculator {
 
     private List<Double> results = new ArrayList<>();
 
-    public <T extends Number> double calculate(T num1, T num2, char operator){
+    public <T1 extends Number, T2 extends Number> double calculate(T1 num1, T2 num2, char operator){
         OperationType operation = OperationType.checkChar(operator);
         return operation.apply(num1, num2);
     }
