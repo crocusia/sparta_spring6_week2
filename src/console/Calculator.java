@@ -43,12 +43,10 @@ public class Calculator {
         }
         return result;
     }
-    //lv2 요구사항 - App 클래스의 main 메서드에서 Calculator클래스의
-    //연산 결과를 저장하고 있는 컬렉션 필드에 직접 접근하지 못하도록 수정 (캡슐화)
 
     //lv2 요구사항 setter
     public void saveResult(int result) {
-        this.results.add(result);
+        results.add(result);
     }
 
     //lv2 요구사항 getter
@@ -56,10 +54,14 @@ public class Calculator {
         return new ArrayList<>(results); //clear를 사용해도 원본 내용이 삭제되지 않도록 복사본 반환
     }
 
+    public int getResultSize() {
+        return results.size();
+    }
+
     //lv2 요구사항 - 제일 오래된 계산 결과 삭제하기
     public void removeResult(){
-        if(!this.results.isEmpty()){
-            this.results.remove(0);
+        if(!results.isEmpty()){
+            results.remove(0);
         }
     }
 }
