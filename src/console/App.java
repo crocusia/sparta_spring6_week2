@@ -6,11 +6,13 @@ import java.util.Scanner;
 // 콘솔창을 이용한 Level 1 계산기 구현 코드
 public class App {
     public static void main(String[] args) {
-        System.out.println("Welcome to Sparta Calculator!");
-        //요구사항 - 반목문을 사용하되 exit 문자열을 입력하기 전까지 무한으로 계산을 진행하도록 함
+
         Scanner scanner = new Scanner(System.in);
-        while(true) {
-            while (true) {
+        //요구사항 - 반목문을 사용하되 exit 문자열을 입력하기 전까지 무한으로 계산을 진행하도록 함
+        boolean isProcessing = true;
+        while(isProcessing) {
+            boolean isCalculation = true;
+            while (isCalculation) {
                 try {
                     //요구사항 - scanner를 사용해서 양의 정수 2개를 전달받기
                     System.out.print("연산할 첫 번째 정수를 입력해주세요 : ");
@@ -45,7 +47,7 @@ public class App {
                     }
                     //요구사항 - 양의 정수 2개와 사칙연산 기호를 사용해 연산을 진행한 후 결과값 출력
                     System.out.println("연산 결과 : " + result);
-                    break;
+                    isCalculation = false;
                 }  //요구사항 - 연산 오류가 발생할 경우 해당 오류에 대한 내용을 정제 후 출력
                 catch (InputMismatchException e) {
                     //정수가 잘못 입력된 경우
@@ -62,12 +64,11 @@ public class App {
                     System.out.println("알 수 없는 오류 발생: " + e.getMessage());
                 }
             }
-            scanner.nextLine();
+            scanner.nextLine(); //입력 버퍼에 남아있는 개행문자 제거
             System.out.println("종료하려면 exit를 입력해주세요: ");
             String isEnd = scanner.nextLine();
-            if(isEnd.equals("exit")) {
-                //exit를 입력 받은 경우 반복 종료
-                break;
+            if(isEnd.equals("exit")) { //exit를 입력 받은 경우 반복 종료
+                isProcessing = false;
             }
         }
         scanner.close();
