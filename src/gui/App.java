@@ -16,8 +16,8 @@ public class App extends JFrame {
             }
             else{ //연산기호가 연속으로 입력되지 않도록 하기
                 char lastChar = text.charAt(text.length() - 1);
-                if(lastChar == '+' || lastChar == '-' || lastChar == '×' || lastChar == '÷'){
-                    return text;
+                if(lastChar == '+' || lastChar == '-' || lastChar == '*' || lastChar == '/'){
+                    return text.substring(0, text.length()-1) + command;
                 }
                 else{
                     return text + command;
@@ -50,7 +50,7 @@ public class App extends JFrame {
                     break;
                 default:
                     //숫자 또는 연산기호
-                    inputField.setText(currentText + command);
+                    inputField.setText(checkInput(currentText, command));
                     break;
             }
         }
