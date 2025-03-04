@@ -4,28 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//lv3(도전 기능) 요구사항 - Enum 타입을 활용하여 연산자 타입에 대한 정보를 관리
 enum OperationType{
     ADD('+'){
         @Override
-        public <T1 extends Number, T2 extends Number> double apply(T1 num1, T2 num2){
+        public <T1 extends Number, T2 extends Number> Number apply(T1 num1, T2 num2){
             return num1.doubleValue() + num2.doubleValue();
         }
     },
     SUB('-'){
         @Override
-        public <T1 extends Number, T2 extends Number> double apply(T1 num1, T2 num2){
+        public <T1 extends Number, T2 extends Number> Number apply(T1 num1, T2 num2){
             return num1.doubleValue() - num2.doubleValue();
         }
     },
     MUL('*'){
         @Override
-        public <T1 extends Number, T2 extends Number> double apply(T1 num1, T2 num2){
+        public <T1 extends Number, T2 extends Number> Number apply(T1 num1, T2 num2){
             return num1.doubleValue() * num2.doubleValue();
         }
     },
     DIV('/'){
         @Override
-        public <T1 extends Number, T2 extends Number> double apply(T1 num1, T2 num2){
+        public <T1 extends Number, T2 extends Number> Number apply(T1 num1, T2 num2){
             if(num2.doubleValue() == 0.0){
                 throw new ArithmeticException();
             }
@@ -33,13 +34,15 @@ enum OperationType{
         }
     };
     //생성자
-    private char operator;
+    private final char operator;
     OperationType(char operator){
         this.operator = operator;
     }
-    //추상 메서드
-    public abstract <T1 extends Number, T2 extends Number> double apply(T1 num1, T2 num2);
 
+    //추상 메서드 lv3(도전 기능) 요구사항 - 제네릭을 사용한 타입 무관 연산 수행
+    public abstract <T1 extends Number, T2 extends Number> Number apply(T1 num1, T2 num2);
+
+    //연산 기호 판별
     public static OperationType checkChar(char operator) {
         for(OperationType op : OperationType.values()){
             if(op.operator == operator){
@@ -52,33 +55,34 @@ enum OperationType{
 
 public class ArithmeticCalculator {
 
-    private List<Double> results = new ArrayList<>();
+    private final List<Number> results = new ArrayList<>();
 
-    public <T1 extends Number, T2 extends Number> double calculate(T1 num1, T2 num2, char operator){
+    public <T1 extends Number, T2 extends Number> Number calculate(T1 num1, T2 num2, char operator){
         OperationType operation = OperationType.checkChar(operator);
         return operation.apply(num1, num2);
     }
 
-    public void saveResult(double result) {
-        this.results.add(result);
+    public void saveResult(Number result) {
+        results.add(result);
     }
 
-    //lv2 요구사항 getter
-    public List<Double> getResultList() {
+    public List<Number> getResultList() {
         return new ArrayList<>(results); //clear를 사용해도 원본 내용이 삭제되지 않도록 복사본 반환
     }
 
-    public List<Double> selectList(double point){
-        List<Double> resultList = results.stream()
-                .filter(r -> r > point)
+    public int getResultSize() {
+        return results.size();
+    }
+    //lv3(도전 기능) 요구사항 - Lambda와 Stream을 활용하여 조회
+    public List<Number> selectList(Number point){
+        return results.stream()
+                .filter(r -> r.doubleValue() > point.doubleValue())
                 .collect(Collectors.toList());
-        return resultList;
     }
 
-    //lv2 요구사항 - 제일 오래된 계산 결과 삭제하기
     public void removeResult(){
-        if(!this.results.isEmpty()){
-            this.results.remove(0);
+        if(!results.isEmpty()){
+            results.remove(0);
         }
     }
 }
