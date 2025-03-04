@@ -93,53 +93,45 @@ public class App {
             String isRecord = scanner.nextLine();
             if (isRecord.equals("record")) {
                 printListResults(arithmeticCalculator.getResultList()); //리스트 내용을 출력 후 초기화
-                boolean isRecordOpen = true;
-                while (isRecordOpen) {
-                    try {
-                        System.out.println("기록 삭제를 원할 시 delete, 기록 조회를 원할 시 select를 입력해주세요: ");
-                        String isRemove = scanner.nextLine();
-                        if (!isRemove.isEmpty()) {
-                            if (isRemove.equals("delete")) {
-                                boolean isDelete = true;
-                                while (isDelete) {
-                                    try {
-                                        System.out.println("삭제할 데이터 개수를 입력하세요");
-                                        int removeNum = scanner.nextInt();
-                                        scanner.nextLine();
-                                        //기록 삭제 메서드 호출
-                                        deleteRecord(removeNum);
-                                        printListResults(arithmeticCalculator.getResultList());
-                                        isDelete = false;
-                                    } catch (IllegalArgumentException e) {
-                                        System.out.println("오류(기록삭제) : " + e);
-                                    } catch (InputMismatchException e) {
-                                        System.out.println("오류(기록삭제) : 잘못된 입력입니다.");
-                                    }
+                try {
+                    System.out.println("기록 삭제를 원할 시 delete, 기록 조회를 원할 시 select를 입력해주세요: ");
+                    String isRemove = scanner.nextLine();
+                    if (!isRemove.isEmpty()) {
+                        if (isRemove.equals("delete")) {
+                            boolean isDelete = true;
+                            while (isDelete) {
+                                try {
+                                    System.out.println("삭제할 데이터 개수를 입력하세요");
+                                    int removeNum = scanner.nextInt();
+                                    scanner.nextLine();
+                                    //기록 삭제 메서드 호출
+                                    deleteRecord(removeNum);
+                                    printListResults(arithmeticCalculator.getResultList());
+                                    isDelete = false;
+                                } catch (IllegalArgumentException e) {
+                                    System.out.println("오류(기록삭제) : " + e);
+                                } catch (InputMismatchException e) {
+                                    System.out.println("오류(기록삭제) : 잘못된 입력입니다.");
                                 }
                             }
-                            else if (isRemove.equals("select")) {
-                                boolean isSelect = true;
-                                while (isSelect) {
-                                    try {
-                                        System.out.println("조회할 값을 입력하세요(해당 값 이상의 기록이 출력됩니다.) : ");
-                                        Number pointNum = scanner.nextDouble();
-                                        scanner.nextLine();
-                                        //조건에 따라 조회된 리스트 내용 출력
-                                        printListResults(arithmeticCalculator.selectList(pointNum));
-                                        isSelect = false;
-                                    } catch (InputMismatchException e) {
-                                        System.out.println("오류(기록조회) : 잘못된 입력입니다.");
-                                    }
+                        } else if (isRemove.equals("select")) {
+                            boolean isSelect = true;
+                            while (isSelect) {
+                                try {
+                                    System.out.println("조회할 값을 입력하세요(해당 값 이상의 기록이 출력됩니다.) : ");
+                                    Number pointNum = scanner.nextDouble();
+                                    scanner.nextLine();
+                                    //조건에 따라 조회된 리스트 내용 출력
+                                    printListResults(arithmeticCalculator.selectList(pointNum));
+                                    isSelect = false;
+                                } catch (InputMismatchException e) {
+                                    System.out.println("오류(기록조회) : 잘못된 입력입니다.");
                                 }
                             }
-                            isRecordOpen = false;
                         }
-                        else {
-                            isRecordOpen = false;
-                        }
-                    }catch (IllegalArgumentException e){
-                        System.out.println("오류(기록관련기능) : " + e);
                     }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("오류(기록관련기능) : " + e);
                 }
             }
 
