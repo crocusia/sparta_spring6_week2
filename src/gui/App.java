@@ -7,55 +7,79 @@ import java.awt.event.ActionListener;
 
 public class App extends JFrame {
 
-    private JTextField inputField; // 입력 필드
-    static InputFunction inputFunction = new InputFunction();
+    private final JTextField inputField; // 입력 필드
+    private final JTextField resultField; // 결과 출력 필드
+    private boolean isCalculated = false;
+
+    private static InputFunction inputFunction = new InputFunction();
+    private static Calculator calculator = new Calculator();
+
+    //실수형으로 저장된 정수를 출력하는 메서드
+    private static String printResult(double result){
+        String num = Double.toString(result);
+        if(result % 1 == 0){
+            num = Integer.toString((int)result);
+        }
+        return num;
+    }
 
     public class BtnClickListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
             String currentText = inputField.getText();
+            if(isCalculated){
+                resultField.setText("");
+                currentText = "";
+                isCalculated = false;
+                System.out.println("true임");
+            }
             switch (command){
                 case "record":
+                    inputField.setText(currentText);
                     break;
                 case "exit":
                     System.exit(0);
                     break;
                 case "⌫":
-                    inputField.setText(inputFunction.InputBackspace(currentText));
+                    inputField.setText(inputFunction.inputBackspace(currentText));
                     break;
                 case "C":
-                    inputField.setText(inputFunction.InputC());
+                    inputField.setText(inputFunction.inputC());
                     break;
                 case "(":
-                    inputField.setText(inputFunction.InputParentheses(currentText, command));
+                    inputField.setText(inputFunction.inputOpenParentheses(currentText));
                     break;
                 case ")":
-                    inputField.setText(inputFunction.InputParentheses(currentText, command));
+                    inputField.setText(inputFunction.inputCloseParentheses(currentText));
                     break;
                 case "+":
-                    inputField.setText(inputFunction.InputOperator(currentText, command));
+                    inputField.setText(inputFunction.inputOperator(currentText, command));
                     break;
                 case "-":
-                    inputField.setText(inputFunction.InputOperator(currentText, command));
+                    inputField.setText(inputFunction.inputOperator(currentText, command));
                     break;
                 case "*":
-                    inputField.setText(inputFunction.InputOperator(currentText, command));
+                    inputField.setText(inputFunction.inputOperator(currentText, command));
                     break;
                 case "/":
-                    inputField.setText(inputFunction.InputOperator(currentText, command));
+                    inputField.setText(inputFunction.inputOperator(currentText, command));
                     break;
                 case "+/-":
                     break;
                 case "=":
-                    inputField.setText(inputFunction.InputComplete(currentText));
+                    String finalStr = inputFunction.inputComplete(currentText);
+                    inputField.setText(finalStr);
+
+                    resultField.setText(printResult(calculator.calculate(finalStr)));
+                    isCalculated = true;
                     break;
                 case ".":
-                    inputField.setText(inputFunction.InputDot(currentText, command));
+                    inputField.setText(inputFunction.inputDot(currentText, command));
                     break;
                 default:
                     //숫자 또는 연산기호
-                    inputField.setText(inputFunction.InputNumber(currentText, command));
+                    inputField.setText(inputFunction.inputNumber(currentText, command));
                     break;
             }
         }
@@ -88,9 +112,13 @@ public class App extends JFrame {
         backspaceBtn.addActionListener(new BtnClickListener());
         inputPanel.add(inputField, BorderLayout.CENTER);
         inputPanel.add(backspaceBtn, BorderLayout.EAST);
-        //상단(툴바 + 입력창)
+        //상단(툴바 + 입력창 + 결과창)
         JPanel upperPanel = new JPanel();
         upperPanel.setLayout(new BorderLayout());
+        resultField = new JTextField();
+        resultField.setHorizontalAlignment(JTextField.RIGHT);
+        resultField.setEditable(false);
+        upperPanel.add(resultField, BorderLayout.SOUTH);
         upperPanel.add(toolPanel, BorderLayout.NORTH);
         upperPanel.add(inputPanel, BorderLayout.CENTER);
 
@@ -110,6 +138,9 @@ public class App extends JFrame {
 
         for(String l : labels){
             JButton btn = new JButton(l);
+            if(l.equals("+/-")){
+                btn.setEnabled(false);
+            }
             btn.addActionListener(new BtnClickListener());
             btnPanel.add(btn);
         }
