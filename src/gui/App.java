@@ -8,27 +8,9 @@ import java.awt.event.ActionListener;
 public class App extends JFrame {
 
     private JTextField inputField; // 입력 필드
+    static InputFunction inputFunction = new InputFunction();
 
-    private String checkInput(String text, String command) {
-        if (command.equals("+") || command.equals("-") ||command.equals("*") || command.equals("/")) {
-            if(text.isEmpty()){ //연산기호가 가장 먼저 입력되면 0을 먼저 넣어주기
-                return "0" + command;
-            }
-            else{ //연산기호가 연속으로 입력되지 않도록 하기
-                char lastChar = text.charAt(text.length() - 1);
-                if(lastChar == '+' || lastChar == '-' || lastChar == '*' || lastChar == '/'){
-                    return text.substring(0, text.length()-1) + command;
-                }
-                else{
-                    return text + command;
-                }
-            }
-        }
-        else{
-            return text + command;
-        }
-    }
-    public class BtnClickListner implements ActionListener{
+    public class BtnClickListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
@@ -40,21 +22,45 @@ public class App extends JFrame {
                     System.exit(0);
                     break;
                 case "⌫":
-                    if(!currentText.isEmpty()){
-                        inputField.setText(currentText.substring(0, currentText.length()-1));
-                    }
+                    inputField.setText(inputFunction.InputBackspace(currentText));
+                    break;
+                case "C":
+                    inputField.setText(inputFunction.InputC());
+                    break;
+                case "(":
+                    inputField.setText(inputFunction.InputParentheses(currentText, command));
+                    break;
+                case ")":
+                    inputField.setText(inputFunction.InputParentheses(currentText, command));
+                    break;
+                case "+":
+                    inputField.setText(inputFunction.InputOperator(currentText, command));
+                    break;
+                case "-":
+                    inputField.setText(inputFunction.InputOperator(currentText, command));
+                    break;
+                case "*":
+                    inputField.setText(inputFunction.InputOperator(currentText, command));
+                    break;
+                case "/":
+                    inputField.setText(inputFunction.InputOperator(currentText, command));
                     break;
                 case "+/-":
                     break;
                 case "=":
+                    inputField.setText(inputFunction.InputComplete(currentText));
+                    break;
+                case ".":
+                    inputField.setText(inputFunction.InputDot(currentText, command));
                     break;
                 default:
                     //숫자 또는 연산기호
-                    inputField.setText(checkInput(currentText, command));
+                    inputField.setText(inputFunction.InputNumber(currentText, command));
                     break;
             }
         }
     }
+
     public App(){
         setTitle("Sparta Calculator");
         setSize(300, 400);
@@ -67,9 +73,9 @@ public class App extends JFrame {
         JPanel toolPanel = new JPanel();
         toolPanel.setLayout(new BorderLayout());
         JButton recordBtn = new JButton("record");
-        recordBtn.addActionListener(new BtnClickListner());
+        recordBtn.addActionListener(new BtnClickListener());
         JButton exitBtn = new JButton("exit");
-        exitBtn.addActionListener(new BtnClickListner());
+        exitBtn.addActionListener(new BtnClickListener());
         toolPanel.add(recordBtn, BorderLayout.WEST);
         toolPanel.add(exitBtn, BorderLayout.EAST);
         //입력창
@@ -79,7 +85,7 @@ public class App extends JFrame {
         inputField.setHorizontalAlignment(JTextField.RIGHT); //우측 정렬
         inputField.setEditable(false); //우선 키보드 입력을 막음
         JButton backspaceBtn = new JButton("⌫");
-        backspaceBtn.addActionListener(new BtnClickListner());
+        backspaceBtn.addActionListener(new BtnClickListener());
         inputPanel.add(inputField, BorderLayout.CENTER);
         inputPanel.add(backspaceBtn, BorderLayout.EAST);
         //상단(툴바 + 입력창)
@@ -104,7 +110,7 @@ public class App extends JFrame {
 
         for(String l : labels){
             JButton btn = new JButton(l);
-            btn.addActionListener(new BtnClickListner());
+            btn.addActionListener(new BtnClickListener());
             btnPanel.add(btn);
         }
 
